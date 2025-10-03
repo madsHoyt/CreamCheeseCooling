@@ -55,15 +55,15 @@
                             for="ambientTempF"
                             class="block text-lg font-medium text-gray-700 mb-2"
                         >
-                            Ambient Cooler Temperature (T<sub>∞</sub>)
+                            Ambient Cooler Temperature ($T_\infty$)
                         </label>
                         <div class="flex items-center space-x-2">
                             <input
                                 type="number"
                                 id="ambientTempF"
                                 value="32"
-                                min="-459.67"
-                                max="300"
+                                min="-450"
+                                max="100"
                                 step="1"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-2xl font-bold text-center"
                             />
@@ -93,7 +93,7 @@
                             class="flex justify-between items-center p-3 bg-blue-50 rounded-lg"
                         >
                             <span class="text-gray-700 font-medium text-lg"
-                                >Predicted Cooling Time:</span
+                                >Time to Target Core Temp (45°F):</span
                             >
                             <span
                                 id="resultTime"
@@ -102,22 +102,38 @@
                             >
                         </div>
 
-                        <div class="flex justify-between items-center text-sm">
-                            <span class="text-gray-600"
-                                >Temperature Ratio (Θ<sub>c</sub>):</span
+                        <div
+                            class="flex justify-between items-center p-3 bg-red-50 rounded-lg border border-red-200"
+                        >
+                            <span class="text-red-700 font-medium text-lg"
+                                >Time to Surface Freezing (30°F):</span
                             >
-                            <span id="ratio" class="font-mono text-gray-800"
+                            <span
+                                id="freezeTime"
+                                class="text-2xl font-extrabold text-red-800"
                                 >--</span
                             >
                         </div>
 
-                        <div class="flex justify-between items-center text-sm">
-                            <span class="text-gray-600"
-                                >Required Fourier Number (Fo):</span
-                            >
-                            <span id="foNumber" class="font-mono text-gray-800"
-                                >--</span
-                            >
+                        <div class="grid grid-cols-2 gap-4 pt-2 text-sm">
+                            <div>
+                                <span class="text-gray-600 block"
+                                    >Core Temp Ratio ($\Theta_c$):</span
+                                >
+                                <span id="ratio" class="font-mono text-gray-800"
+                                    >--</span
+                                >
+                            </div>
+                            <div>
+                                <span class="text-gray-600 block"
+                                    >Surface Freeze Ratio ($\Theta_s$):</span
+                                >
+                                <span
+                                    id="freezeRatio"
+                                    class="font-mono text-gray-800"
+                                    >--</span
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -139,14 +155,14 @@
                             <label
                                 for="tInitialF"
                                 class="block font-medium text-gray-700"
-                                >Start Temp (T<sub>i</sub>, °F)</label
+                                >Start Temp ($T_i$, °F)</label
                             >
                             <input
                                 type="number"
                                 id="tInitialF"
                                 value="165"
                                 step="0.1"
-                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base"
+                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base input-param"
                             />
                         </div>
 
@@ -154,14 +170,14 @@
                             <label
                                 for="tTargetF"
                                 class="block font-medium text-gray-700"
-                                >Target Core Temp (T<sub>c</sub>, °F)</label
+                                >Target Core Temp ($T_c$, °F)</label
                             >
                             <input
                                 type="number"
                                 id="tTargetF"
                                 value="45"
                                 step="0.1"
-                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base"
+                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base input-param"
                             />
                         </div>
 
@@ -169,14 +185,14 @@
                             <label
                                 for="tFreezeF"
                                 class="block font-medium text-gray-700"
-                                >Freezing Point (T<sub>f</sub>, °F)</label
+                                >Freezing Point ($T_f$, °F)</label
                             >
                             <input
                                 type="number"
                                 id="tFreezeF"
                                 value="30"
                                 step="0.1"
-                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base"
+                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base input-param"
                             />
                         </div>
                     </div>
@@ -191,42 +207,42 @@
                             <label
                                 for="LxIn"
                                 class="block font-medium text-gray-700"
-                                >Box Length (L<sub>x</sub>, in)</label
+                                >Box Length ($L_x$, in)</label
                             >
                             <input
                                 type="number"
                                 id="LxIn"
                                 value="15.5"
                                 step="0.1"
-                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base"
+                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base input-param"
                             />
                         </div>
                         <div>
                             <label
                                 for="LyIn"
                                 class="block font-medium text-gray-700"
-                                >Box Width (L<sub>y</sub>, in)</label
+                                >Box Width ($L_y$, in)</label
                             >
                             <input
                                 type="number"
                                 id="LyIn"
                                 value="11.0"
                                 step="0.1"
-                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base"
+                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base input-param"
                             />
                         </div>
                         <div>
                             <label
                                 for="LzIn"
                                 class="block font-medium text-gray-700"
-                                >Box Height (L<sub>z</sub>, in)</label
+                                >Box Height ($L_z$, in)</label
                             >
                             <input
                                 type="number"
                                 id="LzIn"
                                 value="6.5"
                                 step="0.1"
-                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base"
+                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base input-param"
                             />
                         </div>
 
@@ -234,14 +250,14 @@
                             <label
                                 for="biotCalibrated"
                                 class="block font-medium text-gray-700"
-                                >Effective Biot Number (Bi)</label
+                                >Effective Biot Number ($\text{Bi}$)</label
                             >
                             <input
                                 type="number"
                                 id="biotCalibrated"
                                 value="0.75"
                                 step="0.01"
-                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base"
+                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base input-param"
                             />
                             <p class="text-xs text-gray-500 mt-1">
                                 Calibrated to 47h at 32°F.
@@ -259,14 +275,14 @@
                             <label
                                 for="cpJkgk"
                                 class="block font-medium text-gray-700"
-                                >Specific Heat (c<sub>p</sub>​, J/kg·K)</label
+                                >Specific Heat ($c_p$, J/kg$\cdot$K)</label
                             >
                             <input
                                 type="number"
                                 id="cpJkgk"
                                 value="3114"
                                 step="1"
-                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base"
+                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base input-param"
                             />
                         </div>
 
@@ -274,20 +290,20 @@
                             <label
                                 for="rhoKgM3"
                                 class="block font-medium text-gray-700"
-                                >Density (ρ, kg/m³)</label
+                                >Density ($\rho$, kg/m$^3$)</label
                             >
                             <input
                                 type="number"
                                 id="rhoKgM3"
                                 value="750"
                                 step="1"
-                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base"
+                                class="w-full px-3 py-1 border border-gray-300 rounded-md mt-1 text-base input-param"
                             />
                         </div>
 
                         <div class="pt-2">
                             <label class="block font-medium text-gray-700"
-                                >Thermal Conductivity (k, W/m·K)</label
+                                >Thermal Conductivity ($k$, W/m$\cdot$K)</label
                             >
                             <p class="text-base font-semibold text-gray-800">
                                 0.4 (Fixed)
@@ -303,7 +319,8 @@
                             </h3>
                             <p class="text-xs text-gray-500">
                                 Thermal Diffusivity Constant
-                                (k/ρ·c<sub>p</sub>·L²)
+                                $\left(\frac{k}{\rho \cdot c_p \cdot
+                                L^2}\right)$
                             </p>
                             <span
                                 id="derivedConstant"
@@ -358,27 +375,36 @@
                 return lambda;
             }
 
-            /** Calculates the required Fourier number (Fo) based on the temperature ratio and Biot number. */
-            function calculateFo(thetaRatio, Bi) {
+            /** * Calculates the required Fourier number (Fo) based on the temperature ratio, Biot number,
+             * and location (x/L).
+             * @param {number} thetaRatio - The dimensionless temperature ratio (Theta).
+             * @param {number} Bi - The Biot Number.
+             * @param {number} xL - Location as a fraction of characteristic length (0=center, 1=surface).
+             * @returns {number} The required Fourier number.
+             */
+            function calculateFoAtLocation(thetaRatio, Bi, xL) {
                 const lambda1 = solveEigenvalue(Bi);
 
-                // C_1 = 4 * sin(lambda_1) / (2 * lambda_1 + sin(2 * lambda_1))
+                // C_1 constant for plane wall
                 const c1 =
                     (4 * Math.sin(lambda1)) /
                     (2 * lambda1 + Math.sin(2 * lambda1));
 
-                if (thetaRatio <= 0 || c1 <= 0) {
+                // Full transient equation at location x/L: Theta = C1 * exp(-lambda1^2 * Fo) * cos(lambda1 * x/L)
+                const spatialFactor = c1 * Math.cos(lambda1 * xL);
+
+                if (thetaRatio <= 0 || spatialFactor <= 0) {
                     return Infinity;
                 }
 
-                // Fo = -ln(theta_c / C1) / lambda1^2
+                // Fo = -ln(Theta / (C1 * cos(lambda1 * x/L))) / lambda1^2
                 const foRequired =
-                    -Math.log(thetaRatio / c1) / (lambda1 * lambda1);
+                    -Math.log(thetaRatio / spatialFactor) / (lambda1 * lambda1);
 
                 return foRequired;
             }
 
-            /** Main function to calculate and display the cooling time. */
+            /** Main function to calculate and display the cooling and freezing times. */
             function calculateCoolingTime() {
                 // --- READ DYNAMIC INPUTS ---
                 const ambientTempF = parseFloat(
@@ -408,7 +434,7 @@
                     document.getElementById("rhoKgM3").value
                 );
 
-                // Basic validation
+                // Basic validation check (ambientTempF check removed as per request)
                 if (
                     isNaN(ambientTempF) ||
                     isNaN(tInitialF) ||
@@ -426,8 +452,9 @@
                 ) {
                     document.getElementById("resultTime").textContent =
                         "Input Error";
+                    document.getElementById("freezeTime").textContent = "--";
                     document.getElementById("ratio").textContent = "--";
-                    document.getElementById("foNumber").textContent = "--";
+                    document.getElementById("freezeRatio").textContent = "--";
                     document.getElementById("derivedConstant").textContent =
                         "Invalid inputs prevent calculation.";
                     return;
@@ -448,21 +475,24 @@
                     "derivedConstant"
                 ).textContent = `${FO_CONST_PER_S.toExponential(
                     4
-                )} s⁻¹ (Based on shortest side: ${L_Z_M.toFixed(3)} m)`;
+                )} s⁻¹ (Shortest side L: ${L_CHARACTERISTIC.toFixed(4)} m)`;
 
                 // --- FREEZE WARNING LOGIC ---
                 const freezeWarning = document.getElementById("freeze-warning");
-                if (ambientTempF <= tFreezeF) {
-                    freezeWarning.classList.remove("hidden");
+                const ambientInput = document.getElementById("ambientTempF");
+                if (ambientTempF < tFreezeF) {
+                    freezeWarning.classList.remove(
+                        "hidden",
+                        "bg-yellow-100",
+                        "text-yellow-700"
+                    );
                     freezeWarning.classList.add("bg-red-100", "text-red-700");
-                    freezeWarning.textContent = `WARNING: Ambient temperature (${ambientTempF}°F) is below the product's approximate freezing point (${tFreezeF}°F). RISK OF FREEZING DAMAGE!`;
-                    document
-                        .getElementById("ambientTempF")
-                        .classList.add("border-red-500", "bg-red-50");
+                    freezeWarning.textContent = `CRITICAL WARNING: Ambient temp (${ambientTempF}°F) is below freezing point (${tFreezeF}°F). Surface will freeze! (Model may overestimate speed due to latent heat neglect)`;
+                    ambientInput.classList.add("border-red-500", "bg-red-50");
                 } else if (ambientTempF <= tFreezeF + 5) {
                     // Warning margin
-                    freezeWarning.classList.remove("hidden");
                     freezeWarning.classList.remove(
+                        "hidden",
                         "bg-red-100",
                         "text-red-700"
                     );
@@ -470,51 +500,85 @@
                         "bg-yellow-100",
                         "text-yellow-700"
                     );
-                    freezeWarning.textContent = `CAUTION: Ambient temperature (${ambientTempF}°F) is close to freezing. Ensure accurate temperature control.`;
-                    document
-                        .getElementById("ambientTempF")
-                        .classList.remove("border-red-500", "bg-red-50");
+                    freezeWarning.textContent = `CAUTION: Ambient temp (${ambientTempF}°F) is very close to freezing. Ensure tight temperature control.`;
+                    ambientInput.classList.remove(
+                        "border-red-500",
+                        "bg-red-50"
+                    );
                 } else {
                     freezeWarning.classList.add("hidden");
-                    document
-                        .getElementById("ambientTempF")
-                        .classList.remove("border-red-500", "bg-red-50");
+                    ambientInput.classList.remove(
+                        "border-red-500",
+                        "bg-red-50"
+                    );
                 }
 
-                // --- CORE CALCULATION ---
+                // --- CORE COOLING CALCULATION (x/L = 0) ---
 
-                // 1. Convert Temps to Celsius (since constants are in SI units)
+                // 1. Convert Temps to Celsius
                 const T_ambient_C = fahrenheitToCelsius(ambientTempF);
                 const T_INITIAL_C = fahrenheitToCelsius(tInitialF);
                 const T_TARGET_C = fahrenheitToCelsius(tTargetF);
 
-                // 2. Calculate Temperature Ratio (Theta_c)
-                const ratio =
+                // 2. Calculate Core Temperature Ratio (Theta_c at x/L=0)
+                const ratioCore =
                     (T_TARGET_C - T_ambient_C) / (T_INITIAL_C - T_ambient_C);
 
-                if (ratio <= 0) {
+                if (ratioCore <= 0) {
                     document.getElementById("resultTime").textContent =
-                        "INSTANT (Error) - Target core ";
+                        "INSTANT (Error)";
+                    document.getElementById("ratio").textContent = "0";
+                } else {
+                    // 3. Calculate Required Fourier Number for Core
+                    const foRequiredCore = calculateFoAtLocation(
+                        ratioCore,
+                        biotCalibrated,
+                        0
+                    );
+
+                    // 4. Calculate Time
+                    const timeSecondsCore = foRequiredCore / FO_CONST_PER_S;
+                    const timeHoursCore = timeSecondsCore / 3600;
+
+                    // 5. Update UI
                     document.getElementById("ratio").textContent =
-                        ratio.toFixed(4);
-                    document.getElementById("foNumber").textContent = "0";
-                    return;
+                        ratioCore.toFixed(4);
+                    document.getElementById(
+                        "resultTime"
+                    ).textContent = `${timeHoursCore.toFixed(1)} hrs`;
                 }
 
-                // 3. Calculate Required Fourier Number (Fo)
-                const foRequired = calculateFo(ratio, biotCalibrated);
+                // --- SURFACE FREEZING CALCULATION (x/L = 1) ---
+                const T_FREEZE_C = fahrenheitToCelsius(tFreezeF);
 
-                // 4. Calculate Time
-                const timeSeconds = foRequired / FO_CONST_PER_S;
-                const timeHours = timeSeconds / 3600;
+                if (ambientTempF >= tFreezeF) {
+                    // Freezing is impossible if the air temp is not below the freezing point
+                    document.getElementById("freezeTime").textContent = "NEVER";
+                    document.getElementById("freezeRatio").textContent = "--";
+                } else {
+                    // 1. Calculate Surface Freezing Ratio (Theta_s at x/L=1)
+                    const ratioFreeze =
+                        (T_FREEZE_C - T_ambient_C) /
+                        (T_INITIAL_C - T_ambient_C);
 
-                // 5. Update UI
-                document.getElementById("ratio").textContent = ratio.toFixed(4);
-                document.getElementById("foNumber").textContent =
-                    foRequired.toFixed(3);
-                document.getElementById(
-                    "resultTime"
-                ).textContent = `${timeHours.toFixed(1)} hrs`;
+                    // 2. Calculate Required Fourier Number for Surface
+                    const foRequiredFreeze = calculateFoAtLocation(
+                        ratioFreeze,
+                        biotCalibrated,
+                        1
+                    ); // x/L = 1 for surface
+
+                    // 3. Calculate Time
+                    const timeSecondsFreeze = foRequiredFreeze / FO_CONST_PER_S;
+                    const timeHoursFreeze = timeSecondsFreeze / 3600;
+
+                    // 4. Update UI
+                    document.getElementById("freezeRatio").textContent =
+                        ratioFreeze.toFixed(4);
+                    document.getElementById(
+                        "freezeTime"
+                    ).textContent = `${timeHoursFreeze.toFixed(1)} hrs`;
+                }
             }
 
             // --- EVENT LISTENERS ---
