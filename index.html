@@ -350,28 +350,72 @@
             }
 
             /** Solves the transcendental equation for eigenvalues (lambda_1) for a plane wall. */
+            // function solveEigenvalue(Bi) {
+            //     if (Bi === 0) return 0;
+            //     if (Bi > 100) return Math.PI / 2;
+
+            //     let lambda = Math.atan(Bi);
+            //     let prevLambda = 0;
+            //     let tolerance = 1e-6;
+            //     let iteration = 0;
+
+            //     // Newton-Raphson Iteration
+            //     while (
+            //         Math.abs(lambda - prevLambda) > tolerance &&
+            //         iteration < 50
+            //     ) {
+            //         prevLambda = lambda;
+            //         let f = lambda * Math.tan(lambda) - Bi;
+            //         let df =
+            //             Math.tan(lambda) +
+            //             lambda / (Math.cos(lambda) * Math.cos(lambda));
+            //         lambda = lambda - f / df;
+            //         iteration++;
+            //     }
+            //     return lambda;
+            // }
+
             function solveEigenvalue(Bi) {
-                if (Bi === 0) return 0;
-                if (Bi > 100) return Math.PI / 2;
+                // The transcendental equation is: f(lambda) = lambda * tan(lambda) - Bi = 0
+                // The first root (lambda_1) is always between 0 and pi/2.
 
-                let lambda = Math.atan(Bi);
-                let prevLambda = 0;
-                let tolerance = 1e-6;
-                let iteration = 0;
+                if (Bi === 0) return 0; // Bi=0 means infinite conduction resistance, lambda=0
 
-                // Newton-Raphson Iteration
-                while (
-                    Math.abs(lambda - prevLambda) > tolerance &&
-                    iteration < 50
-                ) {
-                    prevLambda = lambda;
-                    let f = lambda * Math.tan(lambda) - Bi;
-                    let df =
-                        Math.tan(lambda) +
-                        lambda / (Math.cos(lambda) * Math.cos(lambda));
-                    lambda = lambda - f / df;
-                    iteration++;
+                // Set initial bounds [0, PI/2]. We ensure the lower bound is slightly > 0
+                // to avoid Math.tan(0) issues and to ensure the root is bracketed.
+                let lowerBound = 1e-4; // Start slightly above zero
+                let upperBound = Math.PI / 2 - 1e-4; // End slightly before PI/2 (infinity)
+
+                const tolerance = 1e-7;
+                let maxIterations = 100;
+                let lambda;
+
+                // Define the function whose root we seek: f(lambda) = lambda * tan(lambda) - Bi
+                const f = (lambda) => lambda * Math.tan(lambda) - Bi;
+
+                // The bounds are set such that f(lowerBound) is negative and f(upperBound) is positive,
+                // guaranteeing the root is bracketed.
+
+                for (let i = 0; i < maxIterations; i++) {
+                    lambda = (lowerBound + upperBound) / 2;
+
+                    // Check for convergence
+                    if (upperBound - lowerBound < tolerance) {
+                        return lambda;
+                    }
+
+                    const f_lambda = f(lambda);
+
+                    if (f_lambda < 0) {
+                        // Root is in the right half [lambda, upperBound]
+                        lowerBound = lambda;
+                    } else {
+                        // Root is in the left half [lowerBound, lambda]
+                        upperBound = lambda;
+                    }
                 }
+
+                // Return the best estimate if max iterations reached
                 return lambda;
             }
 
